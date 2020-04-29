@@ -437,22 +437,7 @@
               </p>
             </div>
           </div>
-          <div class="home-bottom">
-            <div class="bottom-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/x6dbxpxt.jpg"
-                alt=""
-              />
-            </div>
-            <div class="bottom-bottom">
-              <p class="p1">
-                只对你臣服
-              </p>
-              <p class="p2">
-                占了便宜还想跑？
-              </p>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

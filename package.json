@@ -34,5 +34,17 @@
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "description": "```\r npm install\r ```",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lichangxiong-yan/xiongzi-vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lichangxiong-yan/xiongzi-vue/issues"
+  },
+  "homepage": "https://github.com/lichangxiong-yan/xiongzi-vue#readme"
 }
