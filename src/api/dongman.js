@@ -12,7 +12,7 @@ export const getter = () => {
   return request({
     url:
       '/api/wbcomic/home/page_recommend_list?mca=h5_recommend_female&_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    method: 'GET' // 这个是请求方式
   })
 }
 
@@ -26,7 +26,7 @@ export const getterComic = () => {
   return request({
     url:
       '/api/wbcomic/home/recommend_list?location_en=ending_works_list&_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    method: 'GET' // 这个是请求方式
   })
 }
 
@@ -39,7 +39,7 @@ export const getterCate = () => {
   // return 的是 接口调用之后，axios 返回的 Promise 对象
   return request({
     url: '/api/wbcomic/comic/filter_list?_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    method: 'GET' // 这个是请求方式
   })
 }
 
@@ -52,7 +52,7 @@ export const getterRank = () => {
   // return 的是 接口调用之后，axios 返回的 Promise 对象
   return request({
     url: '/api/wbcomic/home/rank_read?_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    method: 'GET' // 这个是请求方式
   })
 }
 
@@ -64,7 +64,19 @@ export const getterShare = () => {
   // return 的是 接口调用之后，axios 返回的 Promise 对象
   return request({
     url: '/api/wbcomic/home/rank_share?_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    method: 'GET' // 这个是请求方式
+  })
+}
+
+// manhua.weibo.cn/wbcomic/home/rank?_type=h5
+/**
+ * 获取综合榜
+ */
+export const getterMax = () => {
+  // return 的是 接口调用之后，axios 返回的 Promise 对象
+  return request({
+    url: '/api/wbcomic/home/rank?_type=h5', // 这个地址是 主体数据
+    method: 'GET' // 这个是请求方式
   })
 }
 
@@ -75,8 +87,7 @@ export const getterShare = () => {
 export const getterResult = () => {
   // return 的是 接口调用之后，axios 返回的 Promise 对象
   return request({
-    url:
-      '/api/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5', // 这个地址是 主体数据
-    methods: 'GET' // 这个是请求方式
+    url: '/api/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5', // 这个地址是 主体数据
+    method: 'GET' // 这个是请求方式
   })
 }

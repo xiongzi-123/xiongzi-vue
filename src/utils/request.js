@@ -9,7 +9,7 @@ const instance = axios.create({
   // 基准路径
   baseURL: 'http://localhost:8080',
   // 超过时间的设置 ms
-  timeout: 5000
+  timeout: 10000
 })
 
 instance.interceptors.request.use(
