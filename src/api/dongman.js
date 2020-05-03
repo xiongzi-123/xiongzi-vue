@@ -16,6 +16,19 @@ export const getter = () => {
   })
 }
 
+// http://manhua.weibo.cn/wbcomic/comic/daypub_list?pub_day=&page_num=1&rows_num=20&_type=h5
+/**
+ * 获取 放松表
+ */
+export const getDay = () => {
+  // return 的是 接口调用之后，axios 返回的 Promise 对象
+  return request({
+    url:
+      '/api/wbcomic/comic/daypub_list?pub_day=&page_num=1&rows_num=20&_type=h5', // 这个地址是 主体数据
+    method: 'GET' // 这个是请求方式
+  })
+}
+
 //  http://manhua.weibo.cn/wbcomic/home/recommend_list?location_en=ending_works_list&_type=h5
 /**
  * 获取完结
@@ -26,19 +39,6 @@ export const getterComic = () => {
   return request({
     url:
       '/api/wbcomic/home/recommend_list?location_en=ending_works_list&_type=h5', // 这个地址是 主体数据
-    method: 'GET' // 这个是请求方式
-  })
-}
-
-// http://manhua.weibo.cn/wbcomic/comic/filter_list?_type=h5
-/**
- * 获取完结
- */
-
-export const getterCate = () => {
-  // return 的是 接口调用之后，axios 返回的 Promise 对象
-  return request({
-    url: '/api/wbcomic/comic/filter_list?_type=h5', // 这个地址是 主体数据
     method: 'GET' // 这个是请求方式
   })
 }
@@ -80,14 +80,86 @@ export const getterMax = () => {
   })
 }
 
-// http://manhua.weibo.cn/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5
+// http://manhua.weibo.cn/wbcomic/comic/filter_list?_type=h5
 /**
- * 获取分类
+ * 获取分类名称数据
  */
-export const getterResult = () => {
+
+export const getterCate = () => {
   // return 的是 接口调用之后，axios 返回的 Promise 对象
   return request({
-    url: '/api/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5', // 这个地址是 主体数据
+    url: '/api/wbcomic/comic/filter_list?_type=h5', // 这个地址是 主体数据
     method: 'GET' // 这个是请求方式
+  })
+}
+
+// http://manhua.weibo.cn/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5
+/**
+ * 获取分类 下面的具体数据
+ */
+export const getterResult = (
+  cate_id = 0,
+  end_status = 0,
+  comic_pay_status = 0,
+  page_num = 1
+) => {
+  // return 的是 接口调用之后，axios 返回的 Promise 对象
+  return request({
+    url: '/api/wbcomic/comic/filter_result', // 这个地址是 主体数据
+    method: 'GET', // 这个是请求方式
+    params: {
+      cate_id,
+      end_status,
+      comic_pay_status,
+      page_num,
+      rows_num: 20,
+      order: '',
+      _type: 'h5'
+    }
+  })
+}
+
+// http://manhua.weibo.cn/wbcomic/home/hot_words?_type=h5
+/**
+ * 获取 热门搜索数据
+ */
+export const getHot = () => {
+  return request({
+    url: '/api/wbcomic/home/hot_words?_type=h5', // 这个地址是 主体数据
+    method: 'GET' // 这个是请求方式
+  })
+}
+
+// http://manhua.weibo.cn/wbcomic/home/search?word=%E6%88%91%E6%98%AF&page_num=1&_type=h5
+/**
+ * 获取搜索结果
+ */
+export const getSearchResult = (word, page_num = 1) => {
+  return request({
+    url: '/api/wbcomic/home/search',
+    method: 'GET',
+    params: {
+      word,
+      page_num,
+      _type: 'h5'
+    }
+  })
+}
+
+// http: manhua.weibo.cn/wbcomic/comic/comic_show?comic_id=71633&create_source=h5&_=1588408432416&_type=h5
+
+/**
+ * 获取搜索结果页
+ */
+export const getDetailsdata = (comiCid) => {
+  return request({
+    url: '/api/wbcomic/comic/comic_show',
+    method: 'GET',
+    params: {
+      comiCid,
+      create_source: 'h5',
+      _: new Date().getTime(), // 时间戳
+      _type: 'h5'
+    }
   })
 }

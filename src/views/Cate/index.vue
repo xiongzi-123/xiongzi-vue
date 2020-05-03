@@ -8,7 +8,7 @@
           v-for="item in CateList.cate_list"
           :key="item.cate_id"
           :class="{ active: classOne === item.cate_id }"
-          @click="classOne = item.cate_id"
+          @click="(classOne = item.cate_id), changeClass()"
         >
           {{ item.cate_cn_name }}
         </div>
@@ -63,7 +63,7 @@
             v-for="item in CateList.end_status_list"
             :key="item.end_status"
             :class="{ active: classThree === item.end_status }"
-            @click="classThree = item.end_status"
+            @click="(classThree = item.end_status), changeClass()"
           >
             {{ item.end_status_name }}
           </div>
@@ -80,7 +80,7 @@
             v-for="item in CateList.comic_pay_status_list"
             :key="item.comic_pay_status"
             :class="{ active: classTwo === item.comic_pay_status }"
-            @click="classTwo = item.comic_pay_status"
+            @click="(classTwo = item.comic_pay_status), changeClass()"
           >
             {{ item.comic_pay_status_name }}
           </div>
@@ -94,20 +94,18 @@
       </div>
     </div>
     <div class="cate-bottom">
-      <div class="loadMoreWraper">
+      <div class="loadMoreWraper scroll" ref="scroll" @scroll="getScroll($event)">
         <!-- v-for="item in Result" :key="item.comic_id" -->
-        <div class="loadMore" v-for="item in Result.data" :key="item.comic_id" >
+        <div class="loadMore" v-for="item in Result" :key="item.comic_id">
           <div class="loadMore-top">
             <img :src="item.comic_hcover" alt="" />
           </div>
           <div class="loadMore-center">
             <p class="p1">
               {{ item.comic_name }}
-
             </p>
             <p class="p2">
               {{ item.comic_desc }}
-
             </p>
           </div>
         </div>
@@ -175,6 +173,10 @@
             </p>
           </div>
         </div> -->
+        <div class="list_img" v-if="isShow">
+          <img src="@/assets/icon/zz.png" alt="" />
+          <p>正在加载...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -195,7 +197,10 @@ export default {
       classTwo: 0,
       classThree: 0,
       CateList: [],
-      Result: []
+      Result: [],
+      pageNum: 1,
+      isOver: false,
+      isShow: false
     }
   },
   methods: {
@@ -205,15 +210,63 @@ export default {
         this.CateList = res.data.data
       })
     },
-    getterResult () {
-      getterResult().then(res => {
-        console.log(res.data.data)
-        this.Result = res.data.data
+
+    getterResult (a, s, d, f) {
+      getterResult(a, s, d, f).then(res => {
+        // console.log(res.data.data)
+        this.Result = res.data.data.data
       })
+    },
+
+    // 滚动一定位置就会进行翻页
+    getScroll (e) {
+      // console.log('123')
+      if (this.isShow || this.isOver) return
+      if (
+        this.$refs.scroll.scrollHeight -
+          this.$refs.scroll.scrollTop -
+          this.$refs.scroll.clientHeight <
+        100
+      ) {
+        this.isShow = true
+        // 符合条件发起请求
+        getterResult(
+          this.classOne,
+          this.classTwo,
+          this.classThree,
+          this.pageNum
+        ).then(res => {
+          if (res.data.data.length > 0) {
+            this.pageNum += 1
+            this.Result.push(...res.data.data)
+            // console.log(Result)
+            this.isShow = false
+          } else {
+            this.isOver = true
+            this.isShow = false
+          }
+        })
+      }
+    },
+    changeClass () {
+      this.isOver = false
+      this.$refs.scroll.scrollTop = 0
+      this.pageNum = 1
+      // 点击原理就是传入四个参数  第一个参数是 第一块分类名称数据的 cate_id
+      // 第二个参数就是 第二块分类名称数据的 end_status
+      // 第三个参数就是 第三块分类名称数据的 comic_pay_status
+      // 第四个参数就是当前的页面 默认都是显示第一页
+      // 前三个参数就是 他们的id 点击就会高亮
+      this.getterResult(
+        this.classOne,
+        this.classTwo,
+        this.classThree,
+        this.pageNum
+      )
     }
   },
-  created () {
-    this.getterCate()
+  async created () {
+    await this.getterCate()
     this.getterResult()
   }
 }
@@ -319,6 +372,21 @@ export default {
             font-size: 12px;
             margin: 0 0 6px;
           }
+        }
+      }
+      .list_img {
+        display: flex;
+        overflow: hidden;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 2.25rem;
+        font-size: 0.75rem;
+        color: #ccc;
+        margin-bottom: 0.375rem;
+        img {
+          width: 2.25rem;
+          animation: circle 1s linear 1s infinite;
         }
       }
     }

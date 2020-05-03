@@ -1,8 +1,8 @@
 <template>
   <div class="page-daypub">
     <Header title='放松表'></Header>
-    <div class="release_date">
-      <p class="release_date_day">周三</p>
+    <div class="release_date" v-for="item in dayList" :key="item.pub_day">
+      <p class="release_date_day">{{ item.pub_name }}</p>
       <p class="release_date_day">周四</p>
 
       <p class="release_date_day">周五</p>
@@ -27,10 +27,26 @@
 
 <script>
 import Header from '../../components/Header'
+import { getDay } from '@/api/dongman'
 export default {
   name: 'Daypub',
   components: {
     Header
+  },
+  data () {
+    return {
+      dayList: []
+    }
+  },
+  methods: {
+    getDay () {
+      getDay().then(res => {
+        this.dayList = res.data.tab_list
+      })
+    }
+  },
+  created () {
+    this.getDay()
   }
 }
 </script>

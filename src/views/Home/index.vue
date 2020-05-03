@@ -104,20 +104,21 @@
           <div class="header-left">精品佳作</div>
           <div class="header-right">更多></div>
         </div>
-        <div class="home_recommend_comics ">
-          <div class="home-top">
-            <div class="top-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/0JOTJle9.jpg"
-                alt=""
-              />
+        <div class="home_recommend_comics threeClassic two">
+          <div class="home-center" v-for="item in goodWork" :key="item.info_id">
+            <div class="center-top">
+              <img :src="item.image_ext_url" alt="" />
             </div>
-            <div class="top-bottom">
-              <p class="p1">你好浮动</p>
-              <p class="p2">你好清除浮动</p>
+            <div class="center-bottom">
+              <p class="p1">
+                {{ item.title }}
+              </p>
+              <p class="p2">
+                {{ item.extra.watching_focus }}
+              </p>
             </div>
           </div>
-          <div class="home-center">
+          <!-- <div class="home-center">
             <div class="center-top">
               <img
                 src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
@@ -148,13 +149,13 @@
                 美男小三居然是恶魔？
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
       <div class="recommend_block">
         <div class="home_recommend_header">
-          <div class="header-left">42421</div>
+          <div class="header-left">人气作品</div>
           <div class="header-right">更多></div>
         </div>
         <div class="home_recommend_comics ">
@@ -244,14 +245,14 @@
             <div class="type2-right">
               <div class="right-top">{{ item.title }}</div>
               <div class="right-center">
-             <img src="~@/assets/icon/icon001.png" alt="">
+                <img src="~@/assets/icon/icon001.png" alt="" />
 
                 {{ item.cate_list[0].cate_cn_name }}、{{
                   item.cate_list[1].cate_cn_name
                 }}
               </div>
               <div class="right-bottom">
-              <img src="~@/assets/icon/aa.png" alt="">
+                <img src="~@/assets/icon/aa.png" alt="" />
                 {{ item.extra.sina_nickname }}
               </div>
             </div>
@@ -355,20 +356,24 @@
           <div class="header-left">小编推荐</div>
           <div class="header-right">更多></div>
         </div>
-        <div class="home_recommend_comics ">
-          <div class="home-top">
-            <div class="top-top">
+        <div class="home_recommend_comics threeClassic">
+          <div class="home-center" v-for="item in xiaoBian" :key="item.info_id">
+            <div class="center-top">
               <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/0JOTJle9.jpg"
+                :src="item.image_ext_url"
                 alt=""
               />
             </div>
-            <div class="top-bottom">
-              <p class="p1">你好浮动</p>
-              <p class="p2">你好清除浮动</p>
+            <div class="center-bottom">
+              <p class="p1">
+                {{ item.title}}
+              </p>
+              <p class="p2">
+                {{ item.extra.watching_focus}}
+              </p>
             </div>
           </div>
-          <div class="home-center">
+          <!-- <div class="home-center">
             <div class="center-top">
               <img
                 src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
@@ -399,12 +404,12 @@
                 美男小三居然是恶魔？
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="recommend_block">
         <div class="home_recommend_header">
-          <div class="header-left">小编推荐</div>
+          <div class="header-left">本周推荐</div>
           <div class="header-right">更多></div>
         </div>
         <div class="home_recommend_comics ">
@@ -491,6 +496,7 @@ export default {
           0,
           3
         )
+        this.xiaoBian = res.data.data.h5_recommend_female_xiaobian_recommend.slice(0, 3)
         this.locationList = res.data.data.location_list.slice(1, 7)
       })
     }
@@ -614,6 +620,9 @@ export default {
           font-size: 14px;
           text-align: center;
           color: #333;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
     }
@@ -666,48 +675,16 @@ export default {
       .home_recommend_comics {
         // height: 420px;
         background: #ffffff;
+        max-width: 100%;
+        flex: auto;
         padding: 0 16px;
         display: flex;
         flex-wrap: wrap; // 允许换行
         box-sizing: border-box;
         justify-content: space-between;
-        .home-top {
-          width: 343px;
-          height: 264px;
 
-          margin-bottom: 10px;
-          .top-top {
-            height: 215px;
-            width: 100%;
-            img {
-              width: 100%;
-              height: 100%;
-              display: block;
-              border-radius: 10px;
-            }
-          }
-          .top-bottom {
-            width: 100%;
-            height: 49px;
-            .p1 {
-              width: 335px;
-              height: 19px;
-              font-size: 14px;
-              color: #666;
-              margin-top: 7px;
-              margin-bottom: 5px;
-            }
-            .p2 {
-              width: 335px;
-              height: 16px;
-              font-size: 12px;
-              color: #999;
-              margin: 0 0 6px;
-            }
-          }
-        }
         .home-center {
-          width: 167px;
+          // width: 167px;
           height: 140px;
           // border: 1px solid #cccccc;
           margin-bottom: 5px;
@@ -720,10 +697,6 @@ export default {
               display: block;
               border-radius: 10px;
             }
-          }
-          .center-bottom {
-            width: 159px;
-            height: 40px;
             .p1 {
               color: #666;
               font-size: 14px;
@@ -735,6 +708,28 @@ export default {
               color: #999;
               font-size: 12px;
               margin: 0 0 6px;
+            }
+          }
+          .center-bottom {
+            width: 159px;
+            height: 40px;
+            .p1 {
+              color: #666;
+              font-size: 14px;
+              height: 19px;
+              margin-top: 6px;
+              margin-bottom: 6px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+            .p2 {
+              color: #999;
+              font-size: 12px;
+              margin: 0 0 6px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
             }
           }
         }
@@ -834,6 +829,21 @@ export default {
           }
         }
       }
+      .threeClassic .home-center:first-child {
+        max-width: 100%;
+        width: 100%;
+        flex: auto;
+        height: 265px;
+        .center-top {
+          height: 215px;
+          width: 100%;
+        }
+      }
+      // .two :nth-child(2) {
+      //   margin-right: 10px;
+      //   flex: 1 0 40%;
+      //   overflow: hidden;
+      // }
     }
   }
 }

@@ -7,7 +7,7 @@
       <div class="box-center">
         <div class="center-top">{{ item.name }}</div>
         <div class="center-center">
-        <img src="~@/assets/icon/icon001.png" alt="">
+          <img src="~@/assets/icon/icon001.png" alt="" />
           <!-- {{ item.cate_list[0].cate_cn_name }}/{{
             item.cate_list[1].cate_cn_name
           }}/{{ item.cate_list[2].cate_cn_name }} -->
@@ -18,7 +18,7 @@
         </div>
 
         <div class="center-bottom">
-         <img src="~@/assets/icon/aa.png" alt="">
+          <img src="~@/assets/icon/aa.png" alt="" />
 
           {{ item.sina_nickname }}
         </div>
@@ -29,7 +29,7 @@
         class="tupian"
         :class="`img-${item.rank_no < 4 ? item.rank_no : ''}`"
       >
-        <div class="" v-if="item.rank_no > 3">{{ item.rank_no }}</div>
+        <div class="shuzi" v-if="item.rank_no > 3">{{ item.rank_no }}</div>
       </div>
     </div>
   </div>
@@ -44,7 +44,6 @@ export default {
       type: Array
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>
@@ -116,35 +115,43 @@ export default {
       width: 1.33333rem;
       height: 54px;
       margin: auto;
-     background-repeat: no-repeat;
+      background-repeat: no-repeat;
 
       right: 0.53333rem;
       background-size: 100%;
       bottom: 0;
     }
-     .img-2 {
+    .img-2 {
       background-image: url("~@/assets/icon/rank_num2.9a307695.png");
       width: 1.33333rem;
       height: 54px;
       margin: auto;
-     background-repeat: no-repeat;
+      background-repeat: no-repeat;
 
       right: 0.53333rem;
       background-size: 100%;
       bottom: 0;
     }
-     .img-3 {
+    .img-3 {
       background-image: url("~@/assets/icon/rank_num3.8800c965.png");
       width: 1.33333rem;
       height: 54px;
       margin: auto;
-     background-repeat: no-repeat;
+      background-repeat: no-repeat;
 
       right: 0.53333rem;
       background-size: 100%;
       bottom: 0;
     }
-
+    .shuzi {
+      font-size: 12px;
+      width: 10px;
+      height: 37px;
+      font-size: 18px;
+      padding: 20px 0 0;
+      color: #666;
+      margin-left: 10px;
+    }
   }
 }
 </style>
