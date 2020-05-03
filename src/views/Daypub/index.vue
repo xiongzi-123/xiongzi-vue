@@ -1,9 +1,13 @@
 <template>
   <div class="page-daypub">
     <Header title='放松表'></Header>
-    <div class="release_date" v-for="item in dayList" :key="item.pub_day">
-      <p class="release_date_day">{{ item.pub_name }}</p>
-      <p class="release_date_day">周四</p>
+    <div class="release_date" >
+      <p class="release_date_day"
+      :class="{'active': item.pub_name === isactive}"
+      @click="isactive = item.pub_name  "
+       v-for="item in dayList" :key="item.pub_day"
+       >{{ item.pub_name }}</p>
+      <!-- <p class="release_date_day">周四</p>
 
       <p class="release_date_day">周五</p>
       <p class="release_date_day">周六</p>
@@ -12,7 +16,7 @@
 
       <p class="release_date_day">昨日</p>
 
-      <p class="release_date_day active">今日</p>
+      <p class="release_date_day active">今日</p> -->
     </div>
     <div class="load_state">
       <img
@@ -35,7 +39,8 @@ export default {
   },
   data () {
     return {
-      dayList: []
+      dayList: [],
+      isactive: '今天'
     }
   },
   methods: {
@@ -64,7 +69,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     .release_date_day {
-      // display: flex;
+      display: flex;
       // align-items: center;
       line-height: 40px;
       width: 28px;

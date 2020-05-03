@@ -93,6 +93,8 @@ export const getterCate = () => {
   })
 }
 
+// http://manhua.weibo.cn/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=2&rows_num=20&order=&_type=h5
+
 // http://manhua.weibo.cn/wbcomic/comic/filter_result?cate_id=0&end_status=0&comic_pay_status=0&page_num=1&rows_num=20&order=&_type=h5
 /**
  * 获取分类 下面的具体数据
@@ -153,12 +155,12 @@ export const getSearchResult = (word, page_num = 1) => {
  */
 export const getDetailsdata = (comiCid) => {
   return request({
-    url: '/api/wbcomic/comic/comic_show',
+    url: '/wbcomic/comic/comic_show',
     method: 'GET',
     params: {
       comiCid,
       create_source: 'h5',
-      _: new Date().getTime(), // 时间戳
+      _: new Date().getTime(),
       _type: 'h5'
     }
   })

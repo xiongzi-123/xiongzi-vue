@@ -96,7 +96,7 @@
     <div class="cate-bottom">
       <div class="loadMoreWraper scroll" ref="scroll" @scroll="getScroll($event)">
         <!-- v-for="item in Result" :key="item.comic_id" -->
-        <div class="loadMore" v-for="item in Result" :key="item.comic_id">
+        <div class="loadMore" v-for="item in Result" :key="item.cates.comic_id">
           <div class="loadMore-top">
             <img :src="item.comic_hcover" alt="" />
           </div>
@@ -236,9 +236,9 @@ export default {
           this.classThree,
           this.pageNum
         ).then(res => {
-          if (res.data.data.length > 0) {
+          if (res.data.data.data.length > 0) {
             this.pageNum += 1
-            this.Result.push(...res.data.data)
+            this.Result.push(...res.data.data.data)
             // console.log(Result)
             this.isShow = false
           } else {
@@ -380,12 +380,12 @@ export default {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        height: 2.25rem;
+        height: 30px;
         font-size: 0.75rem;
         color: #ccc;
         margin-bottom: 0.375rem;
         img {
-          width: 2.25rem;
+          width:50px;
           animation: circle 1s linear 1s infinite;
         }
       }

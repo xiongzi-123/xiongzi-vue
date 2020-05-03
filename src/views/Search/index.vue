@@ -3,7 +3,7 @@
     <div class="search_header">
       <form method="get" action="javascript:void(0);">
         <div class="search_ferame">
-          <span class="search_ferame_icon"></span
+          <span class="search_ferame_icon  iconfont icon-search"></span
           ><input placeholder="请输入搜索关键字" v-model="searchVal" />
           <span
             class="search_clear_cion"

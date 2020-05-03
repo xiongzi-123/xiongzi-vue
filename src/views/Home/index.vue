@@ -98,7 +98,8 @@
           </div>
         </router-link>
       </div>
-
+      <!-- v-for="item in locationList" :key="" -->
+      <template ></template>
       <div class="recommend_block">
         <div class="home_recommend_header">
           <div class="header-left">精品佳作</div>
