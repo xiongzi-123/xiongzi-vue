@@ -28,439 +28,109 @@
       </div>
     </div>
     <div class="bottom">
-      <div class="swipeContainer">
-        <div class="swipe_wrap">
-          <Swiper class="mint-swipe" v-if="bannerList.length > 0">
-            <SwiperItem
-              class="swiper-item"
-              v-for="item in bannerList"
-              :key="item.info_id"
-            >
-              <img :src="item.image_ext_url" alt="" />
-            </SwiperItem>
-            <!-- <SwiperItem class="swiper-item">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/15/n7hszy0N.png"
-                alt=""
-              />
-            </SwiperItem>
-            <SwiperItem class="swiper-item">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/14/gU3Vg3gU.jpg"
-                alt=""
-              />
-            </SwiperItem>
-            <SwiperItem class="swiper-item">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/15/n7hszy0N.png"
-                alt=""
-              />
-            </SwiperItem> -->
-          </Swiper>
-        </div>
-      </div>
+      <van-pull-refresh
+        v-model="isLoading"
+        @refresh="onRefresh"
+        success-text="刷新成功"
+      >
+        <el-backtop target=".bottom" :bottom="8" :right="8">
+          <div class="goTop"></div>
+        </el-backtop>
 
-      <div class="home_menu">
-        <router-link to="/daypub">
-          <div class="home_menu_item">
-            <img
-              src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
-              alt=""
-            />
-            <p>放送表</p>
+        <div class="swipeContainer">
+          <div class="swipe_wrap">
+            <Swiper class="mint-swipe" v-if="bannerList.length > 0">
+              <SwiperItem
+                class="swiper-item"
+                v-for="item in bannerList"
+                :key="item.info_id"
+                v-lazy="item.image_ext_url"
+              >
+                <img :src="item.image_ext_url" alt="" />
+              </SwiperItem>
+            </Swiper>
           </div>
-        </router-link>
-        <router-link to="/cate">
-          <div class="home_menu_item">
-            <img
-              src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
-              alt=""
-            />
-            <p>分类</p>
-          </div>
-        </router-link>
-        <router-link to="/rank">
-          <div class="home_menu_item">
-            <img
-              src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
-              alt=""
-            />
-            <p>榜单</p>
-          </div>
-        </router-link>
-        <router-link to="/comic">
-          <div class="home_menu_item">
-            <img
-              src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
-              alt=""
-            />
-            <p>完结</p>
-          </div>
-        </router-link>
-      </div>
-      <!-- v-for="item in locationList" :key="" -->
-      <template ></template>
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">精品佳作</div>
-          <div class="header-right">更多></div>
         </div>
-        <div class="home_recommend_comics threeClassic two">
-          <div class="home-center" v-for="item in goodWork" :key="item.info_id">
-            <div class="center-top">
-              <img :src="item.image_ext_url" alt="" />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                {{ item.title }}
-              </p>
-              <p class="p2">
-                {{ item.extra.watching_focus }}
-              </p>
-            </div>
-          </div>
-          <!-- <div class="home-center">
-            <div class="center-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div>
-          <div class="home-center">
-            <div class="center-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
 
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">人气作品</div>
-          <div class="header-right">更多></div>
-        </div>
-        <div class="home_recommend_comics ">
-          <div
-            class="home-center"
-            v-for="item in popularList"
-            :key="item.comic_id"
-          >
-            <div class="center-top">
-              <img :src="item.image_ext_url" alt="" />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                {{ item.title }}
-              </p>
-              <p class="p2">
-                {{ item.extra.watching_focus }}
-              </p>
-            </div>
-          </div>
-          <!-- <div class="home-center">
-            <div class="center-top">
+        <div class="home_menu">
+          <router-link to="/daypub">
+            <div class="home_menu_item">
               <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
+                src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
                 alt=""
               />
+              <p>放送表</p>
             </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div>
-          <div class="home-center">
-            <div class="center-top">
+          </router-link>
+          <router-link to="/cate">
+            <div class="home_menu_item">
               <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
+                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/catelog.3cfb4bb6.png"
                 alt=""
               />
+              <p>分类</p>
             </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div>
-          <div class="home-center">
-            <div class="center-top">
+          </router-link>
+          <router-link to="/rank">
+            <div class="home_menu_item">
               <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
+                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/rank.bfd0ebb0.png"
                 alt=""
               />
+              <p>榜单</p>
             </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">人气作品</div>
-          <div class="header-right">更多></div>
-        </div>
-        <div class="home_recommend_comics ">
-          <!-- v-for="item in newWork" :key="item.info_id" -->
-          <div
-            class="home-center-type1"
-            v-for="item in newWork"
-            :key="item.info_id"
-          >
-            <div class="type1-left">
-              <!-- :src="item.image_ext_url" -->
-              <img :src="item.image_ext_url" alt="" />
-            </div>
-            <div class="type2-right">
-              <div class="right-top">{{ item.title }}</div>
-              <div class="right-center">
-                <img src="~@/assets/icon/icon001.png" alt="" />
-
-                {{ item.cate_list[0].cate_cn_name }}、{{
-                  item.cate_list[1].cate_cn_name
-                }}
-              </div>
-              <div class="right-bottom">
-                <img src="~@/assets/icon/aa.png" alt="" />
-                {{ item.extra.sina_nickname }}
-              </div>
-            </div>
-          </div>
-          <!-- <div class="home-center-type1">
-            <div class="type1-left">
+          </router-link>
+          <router-link to="/comic">
+            <div class="home_menu_item">
               <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/JqyVe73t.jpg"
+                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/ending.932e7864.png"
                 alt=""
               />
+              <p>完结</p>
             </div>
-            <div class="type2-right">
-              <div class="right-top">你好明天你好明天你好明天你好明天</div>
-              <div class="right-center">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAGFBMVEUAAABKkOJLkeNLkONVqv9LkuRMkeNKkOIsiLo4AAAAB3RSTlMA5rWIBktK5LpJhQAAADpJREFUKM9joBFgMSwXdkAWYC4vLzdgUAeSRRABxjKGcAFkAfYCEEIATAHGUoQWTEMR1hIGo74lEgAAomkhe7DLd3MAAAAASUVORK5CYII="
-                  alt=""
-                />
-                你好你好
-              </div>
-              <div class="right-bottom">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAyVBMVEUAAAAmJiVJREJ0cm9oaGNubmhzcG1IRUJ2c3BJRUJ0cXB4eHR5d3R5dXVDQz4AAABzcG5iYF1raWZdWlh0cG5QTEpGQ0FPTkx5eXZ7e3s3NzF1dXV3d3d+eHPe3tSkoJ1xa2fIx76ZlpNpZGByb21OSkfCwLhubmlPS0iGgXvOzcR1cW68vLSVkY5/eXR4cm1oaGRgW1dcV1TS0snFw7qQjImCf3yinpqin5iKhoODfXhtZ2Pb29KzsKmOiYVZVFHFxbxsamVmY2Fv8+XpAAAAHXRSTlMAKK/n4uHeuLaun4BkPzcN+vry7ezrlZRQOiojHsW6HFUAAAEbSURBVDjL7ZDXbsMgFECdPZt0b4jtpsSY4Ix6O6Pt/39URYuggOXXRFGOhHR1dXRkX+vMIRg1l18zQWtUKTfd+acjSFuV8nL+ASXO7Njli0G3MdVodAdPZeotiTPqatAsJu1H3R2SKJmUkkRkqLqvlzShOxwAjTyL3AmdvihyP464aILduK/IbVBBsLtW5CsCGAgBEDo5G34fdkK2Jt+KfGcDBoTsoYAP2IcOWxc3iny/+ifDLR986GO2Xj8ocs1bSHkD07+Bu7b3bCnUV1JO4UaR13WhibSQwRbKz2DhmtBEWsoBkj/Iw0ZaXAzk7GQhOx0SYSNtIsJm2kQLV6cXPGymC9ug4GGD3v7NYN+zyhl3vHcNrzO2zpwOPxnwU3esbrlEAAAAAElFTkSuQmCC"
-                  alt=""
-                />
-                你好昨天
-              </div>
-            </div>
-          </div>
-          <div class="home-center-type1">
-            <div class="type1-left">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/JqyVe73t.jpg"
-                alt=""
-              />
-            </div>
-            <div class="type2-right">
-              <div class="right-top">你好明天你好明天你好明天你好明天</div>
-              <div class="right-center">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAGFBMVEUAAABKkOJLkeNLkONVqv9LkuRMkeNKkOIsiLo4AAAAB3RSTlMA5rWIBktK5LpJhQAAADpJREFUKM9joBFgMSwXdkAWYC4vLzdgUAeSRRABxjKGcAFkAfYCEEIATAHGUoQWTEMR1hIGo74lEgAAomkhe7DLd3MAAAAASUVORK5CYII="
-                  alt=""
-                />
-                你好你好
-              </div>
-              <div class="right-bottom">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAyVBMVEUAAAAmJiVJREJ0cm9oaGNubmhzcG1IRUJ2c3BJRUJ0cXB4eHR5d3R5dXVDQz4AAABzcG5iYF1raWZdWlh0cG5QTEpGQ0FPTkx5eXZ7e3s3NzF1dXV3d3d+eHPe3tSkoJ1xa2fIx76ZlpNpZGByb21OSkfCwLhubmlPS0iGgXvOzcR1cW68vLSVkY5/eXR4cm1oaGRgW1dcV1TS0snFw7qQjImCf3yinpqin5iKhoODfXhtZ2Pb29KzsKmOiYVZVFHFxbxsamVmY2Fv8+XpAAAAHXRSTlMAKK/n4uHeuLaun4BkPzcN+vry7ezrlZRQOiojHsW6HFUAAAEbSURBVDjL7ZDXbsMgFECdPZt0b4jtpsSY4Ix6O6Pt/39URYuggOXXRFGOhHR1dXRkX+vMIRg1l18zQWtUKTfd+acjSFuV8nL+ASXO7Njli0G3MdVodAdPZeotiTPqatAsJu1H3R2SKJmUkkRkqLqvlzShOxwAjTyL3AmdvihyP464aILduK/IbVBBsLtW5CsCGAgBEDo5G34fdkK2Jt+KfGcDBoTsoYAP2IcOWxc3iny/+ifDLR986GO2Xj8ocs1bSHkD07+Bu7b3bCnUV1JO4UaR13WhibSQwRbKz2DhmtBEWsoBkj/Iw0ZaXAzk7GQhOx0SYSNtIsJm2kQLV6cXPGymC9ug4GGD3v7NYN+zyhl3vHcNrzO2zpwOPxnwU3esbrlEAAAAAElFTkSuQmCC"
-                  alt=""
-                />
-                你好昨天
-              </div>
-            </div>
-          </div> -->
+          </router-link>
         </div>
-      </div>
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">热门连载</div>
-          <div class="header-right">更多></div>
-        </div>
-        <div class="home_recommend_comics ">
-          <div
-            class="home-center"
-            v-for="item in hotSerial"
-            :key="item.info_id"
-          >
-            <div class="center-top">
-              <img :src="item.image_ext_url" alt="" />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                {{ item.title }}
-              </p>
-              <p class="p2">
-                {{ item.extra.watching_focus }}
-              </p>
-            </div>
-          </div>
-          <!-- <div class="home-center">
-            <div class="center-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
-
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">小编推荐</div>
-          <div class="header-right">更多></div>
-        </div>
-        <div class="home_recommend_comics threeClassic">
-          <div class="home-center" v-for="item in xiaoBian" :key="item.info_id">
-            <div class="center-top">
-              <img
-                :src="item.image_ext_url"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                {{ item.title}}
-              </p>
-              <p class="p2">
-                {{ item.extra.watching_focus}}
-              </p>
-            </div>
-          </div>
-          <!-- <div class="home-center">
-            <div class="center-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div>
-          <div class="home-center">
-            <div class="center-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/13/U7BV1BOY.jpg"
-                alt=""
-              />
-            </div>
-            <div class="center-bottom">
-              <p class="p1">
-                恶魔，别吻我
-              </p>
-              <p class="p2">
-                美男小三居然是恶魔？
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <div class="recommend_block">
-        <div class="home_recommend_header">
-          <div class="header-left">本周推荐</div>
-          <div class="header-right">更多></div>
-        </div>
-        <div class="home_recommend_comics ">
-          <div class="home-bottom" v-for="item in weekList" :key="item.info_id">
-            <div class="bottom-top">
-              <img :src="item.image_ext_url" alt="" />
-            </div>
-            <div class="bottom-bottom">
-              <p class="p1">
-                {{ item.title }}
-              </p>
-              <p class="p2">
-                {{ item.extra.watching_focus }}
-              </p>
-            </div>
-          </div>
-          <!-- <div class="home-bottom">
-            <div class="bottom-top">
-              <img
-                src="https://img.manhua.weibo.com/client/2020/04/20/x6dbxpxt.jpg"
-                alt=""
-              />
-            </div>
-            <div class="bottom-bottom">
-              <p class="p1">
-                只对你臣服
-              </p>
-              <p class="p2">
-                占了便宜还想跑？
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
+        <Homea
+          :list="goodWork"
+          :title="location_list[1]"
+          :myclass="`threeClassic`"
+        ></Homea>
+        <Homea :list="popularList" :title="location_list[2]"></Homea>
+        <Homeb :list="newWork" :title="location_list[3]"></Homeb>
+        <Homea :list="hotSerial" :title="location_list[4]"></Homea>
+        <Homea
+          :list="xiaoBian"
+          :title="location_list[5]"
+          :myclass="`threeClassic`"
+        ></Homea>
+        <Homea
+          :list="weekList"
+          :title="location_list[6]"
+          :myclass="`threeRow`"
+        ></Homea>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperItem } from '@/components/Swiper'
-import { getter } from '@/api/dongman'
+
+import { Swiper, SwiperItem } from '@/components/Swiper' // 引入抽离的 轮播图组件
+import { Homea, Homeb } from '@/components/Home' // 引入首页下半部分主体部分
+
+import { getter } from '@/api/dongman' // 这是个接口 首页所以数据的接口
 
 export default {
   name: 'Home',
-  components: {
+  components: { // 局部组件
     Swiper: Swiper,
-    SwiperItem: SwiperItem
+    SwiperItem: SwiperItem,
+    Homea: Homea,
+    Homeb: Homeb
   },
   data () {
     return {
+      isLoading: false, // 控制下拉刷新
       bannerList: [], // 存于轮播图数据
       goodWork: [], // 存于精品佳作数据 3个
       locationList: [], // 存于那个类型的名字  6个
@@ -469,14 +139,26 @@ export default {
       xiaoBian: [], // 存于小编推荐 3个
       weekList: [], // 本周推荐  3个
       popularList: [] // 人气作品  4个
+      // isShow: false //  这个来控制回到顶部按钮的显示隐藏
     }
   },
   methods: {
+    // 这个方法时用来控制下拉刷新的  给了个定时器
+    onRefresh () {
+      setTimeout(() => {
+        // Toast('刷新成功')
+        this.isLoading = false
+        // this.count++;
+      }, 1000)
+    },
+
     getter () {
+      // 获取数据
       getter().then(res => {
-        console.log(res.data)
+        // console.log(res.data)
+        // .slice 是用来截取数据的  （x,y） 包前不包后
         this.bannerList = res.data.data.h5_recommend_female_rotation_map
-        // console.log('bannerList', bannerList)
+
         this.goodWork = res.data.data.h5_recommend_female_fine_works.slice(
           0,
           3
@@ -497,12 +179,24 @@ export default {
           0,
           3
         )
-        this.xiaoBian = res.data.data.h5_recommend_female_xiaobian_recommend.slice(0, 3)
-        this.locationList = res.data.data.location_list.slice(1, 7)
+        this.xiaoBian = res.data.data.h5_recommend_female_xiaobian_recommend.slice(
+          0,
+          3
+        )
+        this.locationList = res.data.data.location_list
+      })
+    }
+  },
+  computed: {
+    // 这个数据是用来 获取某个值的属性  然后返回出去
+    location_list () {
+      return this.locationList.map(item => {
+        return item.location_cn
       })
     }
   },
   created () {
+    // 这个钩子函数 是用来发请求的
     this.getter()
   }
 }
@@ -512,7 +206,26 @@ export default {
 .page-home {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   height: 100%;
+  .topBtn {
+    width: 36px;
+    height: 36px;
+    z-index: 1;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAAXNSR0IArs4c6QAAAwpJREFUeAHtmT1vE0EQhmeckLPrmBopfwAh0VFRQEVDQ2UHJBA1SZcYoSuSIFIk1CAUSEiThiYVBVTpkOAPgESFUOwKIX8gPOw4kJzsu9vNee8cofckS+uZ2Z2d58avb20iXCAAAiAAAiAAAiAAAiAAAiAAAiAAAiAAAiAAAiDgSoBdA/OMk4WNSrd1uCLEdRaZJuKXQbXa4M3Fdp55XdaeOCC527jQ/dV/I0KXohtmpo/BudJNfrH6NWovejxRQO355asktEck1fjCuUlMtyrba+/j/flbS/mniM/QqTcesNDbZDg6T6oao7Hxq+RvLbyDVG86reYzEqmdqjzm1+XZ6v2idalQQEl64wpqErpUGCC73jhjKlSXCtEgN71xBVSsLuXaQZn1xpVVAbqUWwcN9KZ1eGAVY1NkCo/dFJ/5kpOaecA80FypcWM4cwGketPpyYfhh7/oPk3r/uYSL5pnnHrUHh1Xdh7XNEZjo/boWHNoroHGRR2ext4BdW4vL9ifb7gp01PXy6/WNm11aIzGmuNHMzn2ry6Z3Mkx2TzeAMne3pS5izvSlw0hPU/FX/pVXZ7hy5WtlXfxEaNWjdU5OnfUe2TRnJp7sIcwTMyfND/J7g1Qd//TqlVviHaD2fNXspyvdI7ONYXYdelzbz2p4NPavQEyWnAnKfmx3qimjHFC17kuukQs9yQMvdTmZZEkMEd2ozfM11z0Jn2dE+9Al8yaKbrU5zDsn8zIPvIHiHlreBvHepPDaVxP+Cm69Hx4L1nfewNUvnHxITM/MXf1u750nFVvXIv5p0tMpXVzM36Yj/JPLtHTYC5Ycl3DFmfWnPzVri9J3C6M3kx8f946KK7A/8EGQJa7CEAAZCFgcaODAMhCwOJGBwGQhYDFjQ4CIAsBixsdBEAWAhY3OgiALAQs7jPSQfxtdJ9xttGovC1nApD5sWt7uNA423BMEe+9/T0yzmaDuZlH3S8986cIzes6Ckdt46yJuSAAAiAAAiAAAiAAAiAAAiAAAiAAAiAAAiAAAiBQPIE/Jn79xtinElQAAAAASUVORK5CYII=);
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  }
+  .topBtn,
+  .nav_right .nav_serach {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
   .top {
     @include border-bottom;
 
@@ -626,225 +339,6 @@ export default {
           white-space: nowrap;
         }
       }
-    }
-    .recommend_block {
-      border-radius: 0.5rem;
-      margin-bottom: 10px;
-      .home_recommend_header {
-        height: 44px;
-        background: #ffffff;
-        margin: 8px 0 0;
-        padding: 0 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .header-left {
-          color: #666;
-          font-size: 18px;
-          // padding: 0 0 0 26px;
-          width: 98px;
-          height: 44px;
-          line-height: 44px;
-          position: relative;
-          padding-left: 24px;
-          &::before {
-            content: "";
-            position: absolute;
-            top: 11px;
-            left: 0;
-            width: 22px;
-
-            height: 22px;
-            background-size: cover;
-            background-position: 50%;
-            background: url("../../assets/icon/aa.png");
-            background-repeat: no-repeat;
-          }
-        }
-        .header-right {
-          background: #4a90e2;
-          border-radius: 10px;
-          color: #ffffff;
-          line-height: 22px;
-          text-align: center;
-          font-size: 12px;
-          width: 42px;
-          height: 20px;
-        }
-      }
-      .home_recommend_comics {
-        // height: 420px;
-        background: #ffffff;
-        max-width: 100%;
-        flex: auto;
-        padding: 0 16px;
-        display: flex;
-        flex-wrap: wrap; // 允许换行
-        box-sizing: border-box;
-        justify-content: space-between;
-
-        .home-center {
-          // width: 167px;
-          height: 140px;
-          // border: 1px solid #cccccc;
-          margin-bottom: 5px;
-          .center-top {
-            width: 167px;
-            height: 90px;
-            img {
-              width: 100%;
-              height: 100%;
-              display: block;
-              border-radius: 10px;
-            }
-            .p1 {
-              color: #666;
-              font-size: 14px;
-              height: 19px;
-              margin-top: 6px;
-              margin-bottom: 6px;
-            }
-            .p2 {
-              color: #999;
-              font-size: 12px;
-              margin: 0 0 6px;
-            }
-          }
-          .center-bottom {
-            width: 159px;
-            height: 40px;
-            .p1 {
-              color: #666;
-              font-size: 14px;
-              height: 19px;
-              margin-top: 6px;
-              margin-bottom: 6px;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-            .p2 {
-              color: #999;
-              font-size: 12px;
-              margin: 0 0 6px;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-          }
-        }
-        .home-center-type1 {
-          height: 106px;
-          // padding: 0 16px 16px;
-          display: flex;
-          .type1-left {
-            width: 160px;
-            height: 90px;
-            margin: 0 4px 0 0;
-            // border: 1px solid #cccccc;
-            img {
-              width: 160px;
-              height: 90px;
-              display: block;
-              border-radius: 10px;
-            }
-          }
-          .type2-right {
-            width: 180px;
-            height: 90px;
-            // padding: 0 16px 0 0;
-            // border: 1px solid #cccccc;
-            .right-top {
-              width: 163px;
-              height: 32px;
-              color: #333;
-              font-size: 16px;
-              margin: 4px 0 0;
-              padding: 0 0 4px;
-              text-overflow: ellipsis;
-              overflow: hidden; // 多余隐藏
-              white-space: nowrap; // 规定段落中的文本不进行换行
-            }
-            .right-center {
-              width: 163px;
-              height: 24px;
-              color: #000000;
-              font-size: 12px;
-              padding: 0 0 4px;
-              img {
-                width: 16px;
-                height: 16px;
-                display: block;
-                float: left;
-              }
-            }
-            .right-bottom {
-              width: 163px;
-              color: #000;
-              font-size: 12px;
-              height: 16px;
-              img {
-                width: 16px;
-                height: 16px;
-                display: block;
-                float: left;
-              }
-            }
-          }
-        }
-        .home-bottom {
-          width: 109px;
-          height: 199px;
-          // border: 1px solid #cccccc;
-          .bottom-top {
-            width: 109px;
-            height: 150px;
-            img {
-              width: 100%;
-              height: 100%;
-              display: block;
-              border-radius: 10px;
-            }
-          }
-          .bottom-bottom {
-            width: 101px;
-            height: 49px;
-            .p1 {
-              font-size: 14px;
-              color: #666;
-              height: 19px;
-              margin-top: 6px;
-              margin-bottom: 6px;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-            .p2 {
-              font-size: 12px;
-              color: #999;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-          }
-        }
-      }
-      .threeClassic .home-center:first-child {
-        max-width: 100%;
-        width: 100%;
-        flex: auto;
-        height: 265px;
-        .center-top {
-          height: 215px;
-          width: 100%;
-        }
-      }
-      // .two :nth-child(2) {
-      //   margin-right: 10px;
-      //   flex: 1 0 40%;
-      //   overflow: hidden;
-      // }
     }
   }
 }

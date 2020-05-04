@@ -8,7 +8,7 @@
               <div class="back_btn l_con"></div>
             </div>
             <div class="nav_middle">
-              <span class="nav_title">{{ list.comic.name }}</span>
+              <span class="nav_title">{{ bookObj.comic.name }}</span>
             </div>
             <div class="nav_right">
               <div>
@@ -48,12 +48,14 @@
                       index + 1 === list.wbcomic_cate.length ? 'tags_last' : ''
                     "
                   >
-                    {{ i.cate_cn_name }} </span
-                  >
+                    {{ i.cate_cn_name }}
+                  </span>
                 </div>
                 <div class="comic_hot">
                   <span class="hot_icon"></span><span>热度值：</span
-                  ><span class="hot_num">{{list.comic.comic_hot_value_text}}</span>
+                  ><span class="hot_num">{{
+                    list.comic.comic_hot_value_text
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -74,7 +76,10 @@
         </div>
         <div class="download_banner" v-if="isDownload">
           <div class="download_left">
-            <div class="cancel_download_banner" @click="isDownload = false"></div>
+            <div
+              class="cancel_download_banner"
+              @click="isDownload = false"
+            ></div>
             <div class="download_logo"></div>
             <div>
               <div class="banner_title">安装微博动漫APP</div>
@@ -85,8 +90,20 @@
         </div>
         <div class="comic_intro">
           <div class="menu_nav">
-            <div class="menu_detail" :class="isChange ? 'cur_menu' : ''" @click="isChange = true" >详情</div>
-            <div class="menu_catelog" :class="!isChange ? 'cur_menu' : ''" @click="isChange = false">目录</div>
+            <div
+              class="menu_detail"
+              :class="isChange ? 'cur_menu' : ''"
+              @click="isChange = true"
+            >
+              详情
+            </div>
+            <div
+              class="menu_catelog"
+              :class="!isChange ? 'cur_menu' : ''"
+              @click="isChange = false"
+            >
+              目录
+            </div>
             <!---->
           </div>
         </div>
@@ -96,8 +113,7 @@
               <div class="bold">简介</div>
               <!-- 世间万物,皆为人所使。物尽其用,方能始终。被主人疼爱珍惜的物件,拥有灵性,便可以幻化成人。若是被主人抛弃丟置。便会流浪世间终无所归最终消逝成灰。
               青黛是一把唐代古伞,百年之前因因为战争,不得不被主人遗失,几百年间,青黛已临近日薄西山。为了延长自己的寿命,为了可以再见到想见的主人。青黛不停的帮助被遗弃的物件找到失主延续生命,也为了弥补自己心灵的空缺,在这段旅途中发生了一件件温馨感人的故事…… -->
-              {{list.comic.description}}
-
+              {{ list.comic.description }}
             </div>
             <div class="author">
               <span class="bold">作者：</span>
@@ -110,25 +126,34 @@
                     :src="list.new_author[0].user_avatar"
                   /> -->
                 </div>
-               <span class="author_name">{{list.new_author[0].sina_nickname}}</span>
+                <span class="author_name">{{
+                  list.new_author[0].sina_nickname
+                }}</span>
               </div>
             </div>
           </div>
         </div>
 
-           <div class="catalog_wrap" v-show="!isChange">
+        <div class="catalog_wrap" v-show="!isChange">
           <div>
             <ul class="catalog_list row_catalog_list">
-              <li chapter_id="405772" class="catalog_ceil" v-for="item in list.chapter_list" :key="item.chapter_id">
+              <li
+                chapter_id="405772"
+                class="catalog_ceil"
+                v-for="item in list.chapter_list"
+                :key="item.chapter_id"
+              >
                 <div class="chapter_name lock">
-                  <div class="name-box"><p class="name">{{item.chapter_name}}</p></div>
+                  <div class="name-box">
+                    <p class="name">{{ item.chapter_name }}</p>
+                  </div>
                   <span></span>
                 </div>
               </li>
             </ul>
           </div>
         </div>
-        <div class="comment_box"  v-show="isChange">
+        <div class="comment_box" v-show="isChange">
           <div class="comment-area">
             <div class="comment-title">
               热门评论
@@ -216,7 +241,6 @@
       </div>
       <!---->
     </div>
-
   </div>
 </template>
 
@@ -226,21 +250,32 @@ export default {
   name: 'detailspage',
   data () {
     return {
-      list: [],
+      bookId: this.$route.query.bookId,
+      bookObj: [],
       isDownload: true,
-      isChange: true
+      isChange: true,
+      zjList: [],
+      comic_tags: [],
+      isShow: false
     }
   },
   methods: {
-    getDetailsdata () {
-      getDetailsdata(this.$route.query.comiCid).then(res => {
-        console.log(res.data)
-        this.list = res.data.data
+    getDetailsdata (bookId) {
+      getDetailsdata(bookId).then(res => {
+        this.showCard = true
+        this.bookObj = res.data.data
+        this.comic_tags = this.bookObj.comic_cate
+        this.zjList = this.bookObj.chapter_list
       })
+    },
+    isSort () {
+      this.isShow = !this.isShow
+      this.zjList.reverse()
     }
+
   },
   created () {
-    this.getDetailsdata()
+    this.getDetailsdata(this.bookId)
   }
 }
 </script>

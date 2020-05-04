@@ -153,15 +153,19 @@ export const getSearchResult = (word, page_num = 1) => {
 /**
  * 获取搜索结果页
  */
-export const getDetailsdata = (comiCid) => {
+
+/* eslint-disable */
+export const getDetailsdata = (comic_id) => {
   return request({
-    url: '/wbcomic/comic/comic_show',
+    url: '/api/wbcomic/comic/comic_show',
     method: 'GET',
     params: {
-      comiCid,
+      comic_id,
       create_source: 'h5',
       _: new Date().getTime(),
       _type: 'h5'
     }
   })
 }
+
+/* eslint-enable */

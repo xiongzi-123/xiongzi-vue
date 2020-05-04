@@ -117,12 +117,12 @@
       </template>
       <template v-else>
         <!-- 搜索结果面板 begin -->
+
         <section class="search-content">
           <div
             class="search_list"
             v-for="item in searchIndexList"
             :key="item.comic_id"
-            @click="handleClick(item.sina_nickname)"
           >
             <a href="javascript:;" class=""
               ><div
@@ -151,8 +151,8 @@
                     >
                   </div>
                 </div>
-              </div></a>
-
+              </div></a
+            >
           </div>
         </section>
         <!-- 搜索结果面板 end -->
@@ -277,7 +277,7 @@ export default {
       // 保存
       this.saveSearch(key)
       // 跳转serachResult
-      this.$router.push('/serachResult')
+      this.$router.push(`/detailspage?key=${key}`)
     },
     clearHistory () {
       window.localStorage.setItem('search', '')

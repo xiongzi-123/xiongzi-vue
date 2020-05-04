@@ -1,12 +1,14 @@
 <template>
   <div class="wrap">
-    <div class="comic">
+    <div class="comic" >
       <div class="nav_layout comic_nav">
         <div class="com_nav gray_nav">
           <div class="nav_content">
-            <div class="nav_left"><div class="back_btn l_con"></div></div>
+            <div class="nav_left" @click="$router.back()">
+              <div class="back_btn l_con"></div>
+            </div>
             <div class="nav_middle">
-              <span class="nav_title">伞少女梦谈</span>
+              <span class="nav_title">{{ list.comic.name }}</span>
             </div>
             <div class="nav_right">
               <div>
@@ -25,27 +27,35 @@
           <div class="comic_info h_comic_info">
             <div
               class="comic_cover"
-              data-src="https://img.manhua.weibo.com/hcover/2019/01/29/1790454171_DDTzVtvl.jpg"
               lazy="loaded"
-              style='background-image: url("https://img.manhua.weibo.com/hcover/2019/01/29/1790454171_DDTzVtvl.jpg");'
+              :style="
+                `background-image: url(https://img.manhua.weibo.com/${list.comic.hcover});`
+              "
             ></div>
             <div class="mask"></div>
             <div class="comic_article ">
               <div class="comic_name">
-                <span class="name">伞少女梦谈</span
+                <span class="name">{{ list.comic.name }}</span
                 ><!---->
               </div>
               <div class="comic_tags_hot">
                 <div class="comic_tags">
-                  <span class="tags"> 剧情 </span
-                  ><span class="tags"> 奇幻 </span
-                  ><span class="tags tags_last">
-                    古风
+                  <span
+                    class="tags"
+                    v-for="(i, index) in list.wbcomic_cate"
+                    :key="i.cate_id"
+                    :class="
+                      index + 1 === list.wbcomic_cate.length ? 'tags_last' : ''
+                    "
+                  >
+                    {{ i.cate_cn_name }}
                   </span>
                 </div>
                 <div class="comic_hot">
                   <span class="hot_icon"></span><span>热度值：</span
-                  ><span class="hot_num">5614.2万</span>
+                  ><span class="hot_num">{{
+                    list.comic.comic_hot_value_text
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -64,9 +74,12 @@
             </button>
           </div>
         </div>
-        <div class="download_banner">
+        <div class="download_banner" v-if="isDownload">
           <div class="download_left">
-            <div class="cancel_download_banner"></div>
+            <div
+              class="cancel_download_banner"
+              @click="isDownload = false"
+            ></div>
             <div class="download_logo"></div>
             <div>
               <div class="banner_title">安装微博动漫APP</div>
@@ -77,17 +90,30 @@
         </div>
         <div class="comic_intro">
           <div class="menu_nav">
-            <div class="menu_detail cur_menu">详情</div>
-            <div class="menu_catelog">目录</div>
+            <div
+              class="menu_detail"
+              :class="isChange ? 'cur_menu' : ''"
+              @click="isChange = true"
+            >
+              详情
+            </div>
+            <div
+              class="menu_catelog"
+              :class="!isChange ? 'cur_menu' : ''"
+              @click="isChange = false"
+            >
+              目录
+            </div>
             <!---->
           </div>
         </div>
-        <div class="comic_bottom_content">
+        <div class="comic_bottom_content" v-show="isChange">
           <div class="detail_wrap">
             <div class="details">
               <div class="bold">简介</div>
-              世间万物,皆为人所使。物尽其用,方能始终。被主人疼爱珍惜的物件,拥有灵性,便可以幻化成人。若是被主人抛弃丟置。便会流浪世间终无所归最终消逝成灰。
-              青黛是一把唐代古伞,百年之前因因为战争,不得不被主人遗失,几百年间,青黛已临近日薄西山。为了延长自己的寿命,为了可以再见到想见的主人。青黛不停的帮助被遗弃的物件找到失主延续生命,也为了弥补自己心灵的空缺,在这段旅途中发生了一件件温馨感人的故事……
+              <!-- 世间万物,皆为人所使。物尽其用,方能始终。被主人疼爱珍惜的物件,拥有灵性,便可以幻化成人。若是被主人抛弃丟置。便会流浪世间终无所归最终消逝成灰。
+              青黛是一把唐代古伞,百年之前因因为战争,不得不被主人遗失,几百年间,青黛已临近日薄西山。为了延长自己的寿命,为了可以再见到想见的主人。青黛不停的帮助被遗弃的物件找到失主延续生命,也为了弥补自己心灵的空缺,在这段旅途中发生了一件件温馨感人的故事…… -->
+              {{ list.comic.description }}
             </div>
             <div class="author">
               <span class="bold">作者：</span>
@@ -95,263 +121,39 @@
                 <div class="avatar component_avatar author_avatar">
                   <img
                     src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/default_avatar.8bc0dfd7.png"
-                  /><img
-                    src="http://tva3.sinaimg.cn/crop.128.132.250.250.180/6ab8299bjw8eof67pqhdgj20fg0fgtao.jpg"
                   />
+                  <!-- <img v-if="list.new_author[0].user_avatar.substr(0,4) === 'http'"
+                    :src="list.new_author[0].user_avatar"
+                  /> -->
                 </div>
-                <span class="author_name">企鹅子</span>
+                <span class="author_name">{{
+                  list.ncomic.sina_nickname
+                }}</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="catalog_wrap" style="display: none;">
+
+        <div class="catalog_wrap" v-show="!isChange">
           <div>
-            <!---->
             <ul class="catalog_list row_catalog_list">
-              <li chapter_id="407750" class="catalog_ceil">
-                <div class="chapter_name">
+              <li
+                chapter_id="405772"
+                class="catalog_ceil"
+                v-for="item in list.chapter_list"
+                :key="item.chapter_id"
+              >
+                <div class="chapter_name lock">
                   <div class="name-box">
-                    <p class="name">第九话 离离 （三）</p>
+                    <p class="name">{{ item.chapter_name }}</p>
                   </div>
-                </div>
-              </li>
-              <li chapter_id="405953" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第九话 离离 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="404629" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第九话 离离 （一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="403251" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第八话 菱菱 （五）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="401065" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第八话 菱菱 （四）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="399695" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第八话 菱菱 （三）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="398457" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第八话 菱菱 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="397494" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第八话 菱菱 （一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="391476" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第七话 九玺 （五）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="388197" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第七话 九玺 （四）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="386181" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第七话 九玺 （三）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="384461" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第七话 九玺 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="383097" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第七话 九玺 （一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="381126" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （六）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="377293" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （五）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="374840" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （四）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="370061" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （三）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="367343" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="364676" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第六话 月白 （一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="362128" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （六）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="358193" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （五）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="353555" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （四）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="350981" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （三）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="347719" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="341693" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第五话 小怜 （一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="341486" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第四话 忘归 （五）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="337691" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第四话 忘归 （四）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="333621" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第四话 忘归 （三）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="331310" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第四话 忘归 （二）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="328806" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第四话 忘归（一）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="326876" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box"><p class="name">第三话 思弈</p></div>
-                </div>
-              </li>
-              <li chapter_id="326875" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第二话 八宝（下）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="326869" class="catalog_ceil noMargin">
-                <div class="chapter_name">
-                  <div class="name-box">
-                    <p class="name">第二话 八宝（上）</p>
-                  </div>
-                </div>
-              </li>
-              <li chapter_id="326858" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box"><p class="name">第一话 白桢</p></div>
-                </div>
-              </li>
-              <li chapter_id="327564" class="catalog_ceil">
-                <div class="chapter_name">
-                  <div class="name-box"><p class="name">序章</p></div>
+                  <span></span>
                 </div>
               </li>
             </ul>
-            <!----><!---->
           </div>
         </div>
-        <div class="comment_box">
+        <div class="comment_box" v-show="isChange">
           <div class="comment-area">
             <div class="comment-title">
               热门评论
@@ -439,25 +241,71 @@
       </div>
       <!---->
     </div>
-    <!----><!---->
   </div>
 </template>
 
 <script>
+import { getDetailsdata } from '@/api/dongman'
 export default {
-  name: 'detailspage'
+  name: 'detailspage',
+  data () {
+    return {
+      // bookId: this.$route.query.bookId,
+      // bookObj: [],
+      // isDownload: true,
+      // isChange: true,
+      // zjList: [],
+      // comic_tags: [],
+      // isShow: false
+      hasLoading: true,
+      isLoading: false,
+      list: {},
+      isDownload: true,
+      isChange: true
+    }
+  },
+  methods: {
+    onRefresh () {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 1000)
+    }
+    // getDetailsdata (bookId) {
+    //   getDetailsdata(bookId).then(res => {
+    //     this.showCard = true
+    //     this.bookObj = res.data.data
+    //     this.comic_tags = this.bookObj.comic_cate
+    //     this.zjList = this.bookObj.chapter_list
+    //   })
+    // },
+    // isSort () {
+    //   this.isShow = !this.isShow
+    //   this.zjList.reverse()
+    // }
+
+  },
+  created () {
+    getDetailsdata(this.$route.query.comic_id).then(res => {
+      console.log(res)
+
+      this.list = res.data
+      this.hasLoading = false
+    })
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .comic_content {
   overflow-y: scroll;
+  // height: 44px;
 }
 .looking_chapter {
   font-size: 16px;
 }
 .back_btn {
   background-image: url("~@/assets/icon/goback.png");
+  height: 44px;
 }
 .h_comic_info .mask {
   background: -webkit-gradient(

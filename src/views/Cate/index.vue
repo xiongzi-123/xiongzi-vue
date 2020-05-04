@@ -94,11 +94,14 @@
       </div>
     </div>
     <div class="cate-bottom">
-      <div class="loadMoreWraper scroll" ref="scroll" @scroll="getScroll($event)">
-        <!-- v-for="item in Result" :key="item.comic_id" -->
+      <div
+        class="loadMoreWraper scroll"
+        ref="scroll"
+        @scroll="getScroll($event)"
+      >
         <div class="loadMore" v-for="item in Result" :key="item.cates.comic_id">
           <div class="loadMore-top">
-            <img :src="item.comic_hcover" alt="" />
+            <img :src="item.comic_hcover" alt="" v-lazy="item.comic_hcover" />
           </div>
           <div class="loadMore-center">
             <p class="p1">
@@ -173,6 +176,10 @@
             </p>
           </div>
         </div> -->
+        <el-backtop target=".cate-bottom" :bottom="8" :right="8">
+          <div class="goTop"></div>
+        </el-backtop>
+
         <div class="list_img" v-if="isShow">
           <img src="@/assets/icon/zz.png" alt="" />
           <p>正在加载...</p>
@@ -200,10 +207,17 @@ export default {
       Result: [],
       pageNum: 1,
       isOver: false,
-      isShow: false
+      isShow: false,
+      isLoading: false // 控制下拉刷新
     }
   },
   methods: {
+    onRefresh () {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 1000)
+    },
+
     getterCate () {
       getterCate().then(res => {
         console.log(res.data.data.cate_list)
@@ -357,6 +371,7 @@ export default {
             width: 100%;
             height: 100%;
             display: block;
+            border-radius: 10px;
           }
         }
         .loadMore-center {
@@ -385,7 +400,7 @@ export default {
         color: #ccc;
         margin-bottom: 0.375rem;
         img {
-          width:50px;
+          width: 50px;
           animation: circle 1s linear 1s infinite;
         }
       }

@@ -1,21 +1,20 @@
 <template>
   <div class="page-comic">
     <Header title="完结"></Header>
-    <div class="box" >
+    <div class="box">
       <div class="box-max" v-for="item in ComicList" :key="item.extra.comic_id">
-        <div class="max-top" >
-          <img
-            :src="item.extra.hcover"
-            alt=""
-          />
+        <div class="max-top">
+          <img :src="item.extra.hcover" alt="" />
         </div>
         <div class="max-bottom">
           <span class="span1">恋爱</span>
 
-          <span class="span2"> {{ item.extra.name}}</span>
+          <span class="span2"> {{ item.extra.name }}</span>
         </div>
       </div>
-
+      <el-backtop target=".box" :bottom="8" :right="8">
+        <div class="goTop"></div>
+      </el-backtop>
     </div>
   </div>
 </template>
@@ -71,6 +70,7 @@ export default {
       }
       .max-bottom {
         height: 28px;
+
         margin: 0 0 0 8px;
 
         .span1 {

@@ -1,0 +1,308 @@
+ .recommend_block {
+   border-radius: 0.5rem;
+   margin-bottom: 10px;
+
+   .home_recommend_header {
+     height: 44px;
+     background: #ffffff;
+     margin: 8px 0 0;
+     padding: 0 16px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+     .header-left {
+       color: #666;
+       font-size: 18px;
+       // padding: 0 0 0 26px;
+       width: 98px;
+       height: 44px;
+       line-height: 44px;
+       position: relative;
+       padding-left: 24px;
+
+       &::before {
+         content: "";
+         position: absolute;
+         top: 11px;
+         left: 0;
+         width: 22px;
+
+         height: 22px;
+         background-size: cover;
+         background-position: 50%;
+         background: url("../../assets/icon/aa.png");
+         background-repeat: no-repeat;
+       }
+     }
+
+     .header-right {
+       background: #4a90e2;
+       border-radius: 10px;
+       color: #ffffff;
+       line-height: 22px;
+       text-align: center;
+       font-size: 12px;
+       width: 42px;
+       height: 20px;
+     }
+   }
+
+   .home_recommend_comics {
+     // height: 420px;
+     background: #ffffff;
+     max-width: 100%;
+     flex: auto;
+     padding: 0 16px;
+     display: flex;
+     flex-wrap: wrap; // 允许换行
+     box-sizing: border-box;
+     justify-content: space-between;
+
+     .home-center {
+       // width: 167px;
+       height: 140px;
+       // border: 1px solid #cccccc;
+       margin-bottom: 5px;
+
+       .center-top {
+         width: 167px;
+         height: 90px;
+
+         img {
+           width: 100%;
+           height: 100%;
+           display: block;
+           border-radius: 10px;
+         }
+
+         .p1 {
+           color: #666;
+           font-size: 14px;
+           height: 19px;
+           margin-top: 6px;
+           margin-bottom: 6px;
+         }
+
+         .p2 {
+           color: #999;
+           font-size: 12px;
+           margin: 0 0 6px;
+         }
+       }
+
+       .center-bottom {
+         width: 159px;
+         height: 40px;
+
+         .p1 {
+           color: #666;
+           font-size: 14px;
+           height: 19px;
+           margin-top: 6px;
+           margin-bottom: 6px;
+           text-overflow: ellipsis;
+           overflow: hidden;
+           white-space: nowrap;
+         }
+
+         .p2 {
+           color: #999;
+           font-size: 12px;
+           margin: 0 0 6px;
+           text-overflow: ellipsis;
+           overflow: hidden;
+           white-space: nowrap;
+         }
+       }
+     }
+
+     .home-center-type1 {
+       height: 106px;
+       // padding: 0 16px 16px;
+       display: flex;
+
+       .type1-left {
+         width: 160px;
+         height: 90px;
+         margin: 0 4px 0 0;
+
+         // border: 1px solid #cccccc;
+         img {
+           width: 160px;
+           height: 90px;
+           display: block;
+           border-radius: 10px;
+         }
+       }
+
+       .type2-right {
+         width: 180px;
+         height: 90px;
+
+         // padding: 0 16px 0 0;
+         // border: 1px solid #cccccc;
+         .right-top {
+           width: 163px;
+           height: 32px;
+           color: #333;
+           font-size: 16px;
+           margin: 4px 0 0;
+           padding: 0 0 4px;
+           text-overflow: ellipsis;
+           overflow: hidden; // 多余隐藏
+           white-space: nowrap; // 规定段落中的文本不进行换行
+         }
+
+         .right-center {
+           width: 163px;
+           height: 24px;
+           color: #000000;
+           font-size: 12px;
+           padding: 0 0 4px;
+
+           img {
+             width: 16px;
+             height: 16px;
+             display: block;
+             float: left;
+           }
+         }
+
+         .right-bottom {
+           width: 163px;
+           color: #000;
+           font-size: 12px;
+           height: 16px;
+
+           img {
+             width: 16px;
+             height: 16px;
+             display: block;
+             float: left;
+           }
+         }
+       }
+     }
+
+     .home-bottom {
+       width: 109px;
+       height: 199px;
+
+       // border: 1px solid #cccccc;
+       .bottom-top {
+         width: 109px;
+         height: 150px;
+
+         img {
+           width: 100%;
+           height: 100%;
+           display: block;
+           border-radius: 10px;
+         }
+       }
+
+       .bottom-bottom {
+         width: 101px;
+         height: 49px;
+
+         .p1 {
+           font-size: 14px;
+           color: #666;
+           height: 19px;
+           margin-top: 6px;
+           margin-bottom: 6px;
+           text-overflow: ellipsis;
+           overflow: hidden;
+           white-space: nowrap;
+         }
+
+         .p2 {
+           font-size: 12px;
+           color: #999;
+           text-overflow: ellipsis;
+           overflow: hidden;
+           white-space: nowrap;
+         }
+       }
+     }
+
+   }
+
+   .threeClassic .home-center:first-child {
+     max-width: 100%;
+     width: 100%;
+     flex: auto;
+     height: 265px;
+
+     .center-top {
+       height: 215px;
+       width: 100%;
+     }
+   }
+ }
+
+ // 这个下面的样式是用来控制  本周推荐那个内容   !important将css样式设为最高级   因为样式好像哪里有问题所以就用这个
+.threeRow  {
+   display: flex;
+
+   flex-direction: row !important;
+   ;
+
+   justify-content: flex-start !important;
+   ;
+
+   align-items: flex-start !important;
+   ;
+
+   flex-wrap: nowrap !important;
+   ;
+       .home-center {
+         height: 200px !important;
+        width: 109px !important;
+        ;
+        margin-left: 8px !important;
+        ;
+      }
+
+      .center-top {
+        height: 150px !important;
+        ;
+        width: 109px !important;
+        ;
+
+        img {
+          width: 100% !important;
+          ;
+          height: 150px !important;
+          ;
+          display: block !important;
+          ;
+        }
+
+      }
+        .center-bottom {
+          width: 101px !important;
+          height: 49px !important;
+
+          .p1 {
+            font-size: 14px !important;
+            color: #666 !important;
+            height: 19px !important;
+            margin-top: 6px !important;
+            margin-bottom: 6px !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+          }
+
+          .p2 {
+            font-size: 12px !important;
+            color: #999 !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+          }
+        }
+
+ }

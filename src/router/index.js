@@ -9,7 +9,7 @@ const Rank = () => import('../views/Rank')
 
 const Search = () => import('../views/Search')
 const Comic = () => import('../views/Comic')
-const SerachResult = () => import('../views/SerachResult')
+const Detailspage = () => import('../views/Detailspage')
 
 Vue.use(VueRouter)
 
@@ -40,8 +40,9 @@ const router = new VueRouter({
       component: Search
     },
     {
-      path: '/serachResult',
-      component: SerachResult
+      path: '/Detailspage',
+      component: Detailspage,
+      name: 'detailspage'
     },
     {
       path: '/comic',
