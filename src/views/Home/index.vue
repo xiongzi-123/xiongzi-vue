@@ -28,93 +28,106 @@
       </div>
     </div>
     <div class="bottom">
-      <van-pull-refresh
+      <!-- <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh"
         success-text="刷新成功"
-      >
-        <el-backtop target=".bottom" :bottom="8" :right="8">
-          <div class="goTop"></div>
-        </el-backtop>
+      > -->
+      <el-backtop target=".bottom" :bottom="8" :right="8">
+        <div class="goTop"></div>
+      </el-backtop>
 
-        <div class="swipeContainer">
-          <div class="swipe_wrap">
-            <Swiper class="mint-swipe" v-if="bannerList.length > 0">
-              <SwiperItem
-                class="swiper-item"
-                v-for="item in bannerList"
-                :key="item.info_id"
-                v-lazy="item.image_ext_url"
-              >
-                <img :src="item.image_ext_url" alt="" />
-              </SwiperItem>
-            </Swiper>
+      <div class="swipeContainer">
+        <div class="swipe_wrap">
+          <Swiper class="mint-swipe" v-if="bannerList.length > 0">
+            <SwiperItem
+              class="swiper-item"
+              v-for="item in bannerList"
+              :key="item.info_id"
+              v-lazy="item.image_ext_url"
+            >
+              <img :src="item.image_ext_url" alt="" />
+            </SwiperItem>
+          </Swiper>
+        </div>
+      </div>
+
+      <div class="home_menu">
+        <router-link to="/daypub">
+          <div class="home_menu_item">
+            <img
+              src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
+              alt=""
+            />
+            <p>放送表</p>
           </div>
-        </div>
+        </router-link>
+        <router-link to="/cate">
+          <div class="home_menu_item">
+            <img
+              src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/catelog.3cfb4bb6.png"
+              alt=""
+            />
+            <p>分类</p>
+          </div>
+        </router-link>
+        <router-link to="/rank">
+          <div class="home_menu_item">
+            <img
+              src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/rank.bfd0ebb0.png"
+              alt=""
+            />
+            <p>榜单</p>
+          </div>
+        </router-link>
+        <router-link to="/comic">
+          <div class="home_menu_item">
+            <img
+              src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/ending.932e7864.png"
+              alt=""
+            />
+            <p>完结</p>
+          </div>
+        </router-link>
+      </div>
 
-        <div class="home_menu">
-          <router-link to="/daypub">
-            <div class="home_menu_item">
-              <img
-                src="http://img.manhua.weibo.com/static/b/vcomic-h5/dist/img/daypub.7d71503a.png"
-                alt=""
-              />
-              <p>放送表</p>
-            </div>
-          </router-link>
-          <router-link to="/cate">
-            <div class="home_menu_item">
-              <img
-                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/catelog.3cfb4bb6.png"
-                alt=""
-              />
-              <p>分类</p>
-            </div>
-          </router-link>
-          <router-link to="/rank">
-            <div class="home_menu_item">
-              <img
-                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/rank.bfd0ebb0.png"
-                alt=""
-              />
-              <p>榜单</p>
-            </div>
-          </router-link>
-          <router-link to="/comic">
-            <div class="home_menu_item">
-              <img
-                src="//img.manhua.weibo.com/static/b/vcomic-h5/dist/img/ending.932e7864.png"
-                alt=""
-              />
-              <p>完结</p>
-            </div>
-          </router-link>
-        </div>
-        <Homea
-          :list="goodWork"
-          :title="location_list[1]"
-          :myclass="`threeClassic`"
-        ></Homea>
-        <Homea :list="popularList" :title="location_list[2]"></Homea>
-        <Homeb :list="newWork" :title="location_list[3]"></Homeb>
-        <Homea :list="hotSerial" :title="location_list[4]"></Homea>
-        <Homea
-          :list="xiaoBian"
-          :title="location_list[5]"
-          :myclass="`threeClassic`"
-        ></Homea>
-        <Homea
-          :list="weekList"
-          :title="location_list[6]"
-          :myclass="`threeRow`"
-        ></Homea>
-      </van-pull-refresh>
+      <!-- 这六个组件是 六块数据 -->
+      <Homea
+        :list="goodWork"
+        :title="location_list[1]"
+        :myclass="`threeClassic`"
+        :en="list_en[1]"
+      ></Homea>
+      <Homea
+        :list="popularList"
+        :title="location_list[2]"
+        :en="list_en[2]"
+      ></Homea>
+      <Homeb :list="newWork" :title="location_list[3]" :en="list_en[3]">
+      </Homeb>
+      <Homea
+        :list="hotSerial"
+        :title="location_list[4]"
+        :en="list_en[4]"
+      ></Homea>
+      <Homea
+        :list="xiaoBian"
+        :title="location_list[5]"
+        :myclass="`threeClassic`"
+        :en="list_en[5]"
+      ></Homea>
+      <Homea
+        :list="weekList"
+        :title="location_list[6]"
+        :myclass="`threeRow`"
+        :en="list_en[6]"
+      ></Homea>
+      <!-- </van-pull-refresh> -->
     </div>
   </div>
 </template>
 
 <script>
-
 import { Swiper, SwiperItem } from '@/components/Swiper' // 引入抽离的 轮播图组件
 import { Homea, Homeb } from '@/components/Home' // 引入首页下半部分主体部分
 
@@ -122,7 +135,8 @@ import { getter } from '@/api/dongman' // 这是个接口 首页所以数据的�
 
 export default {
   name: 'Home',
-  components: { // 局部组件
+  components: {
+    // 局部组件
     Swiper: Swiper,
     SwiperItem: SwiperItem,
     Homea: Homea,
@@ -192,6 +206,11 @@ export default {
     location_list () {
       return this.locationList.map(item => {
         return item.location_cn
+      })
+    },
+    list_en () {
+      return this.locationList.map(item => {
+        return item.location_en
       })
     }
   },

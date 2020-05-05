@@ -7,16 +7,7 @@
       @click="isactive = item.pub_name  "
        v-for="item in dayList" :key="item.pub_day"
        >{{ item.pub_name }}</p>
-      <!-- <p class="release_date_day">周四</p>
 
-      <p class="release_date_day">周五</p>
-      <p class="release_date_day">周六</p>
-
-      <p class="release_date_day">周末</p>
-
-      <p class="release_date_day">昨日</p>
-
-      <p class="release_date_day active">今日</p> -->
     </div>
     <div class="load_state">
       <img

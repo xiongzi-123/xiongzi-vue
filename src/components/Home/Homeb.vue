@@ -1,8 +1,8 @@
 <template>
   <div class="recommend_block">
     <div class="home_recommend_header">
-      <div class="header-left">{{title}}</div>
-      <div class="header-right">更多></div>
+      <div class="header-left"><img src="../../assets/icon/aa.png" alt="">{{title}}</div>
+      <div class="header-right" @click="$router.push({name:'recommend',query: {location_en: en,title:title}})">更多></div>
     </div>
     <div class="home_recommend_comics ">
 
@@ -45,6 +45,9 @@ export default {
       }
     },
     title: {
+      type: String
+    },
+    en: {
       type: String
     }
 

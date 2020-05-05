@@ -10,6 +10,7 @@ const Rank = () => import('../views/Rank')
 const Search = () => import('../views/Search')
 const Comic = () => import('../views/Comic')
 const Detailspage = () => import('../views/Detailspage')
+const Recommend = () => import('../views/Recommend')
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const router = new VueRouter({
     {
       path: '/comic',
       component: Comic
+    },
+    {
+      path: '/recommend',
+      component: Recommend,
+      name: 'recommend'
     },
     {
       path: '',

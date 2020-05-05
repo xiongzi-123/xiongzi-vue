@@ -321,6 +321,14 @@ export default {
         height: 44px;
         background: url("../../assets/icon/search.15e76af5.png");
         background-repeat: no-repeat;
+        .icon-search:before {
+          content: "\e60b";
+          /* width: 44px; */
+          color: #cccccc;
+          font-size: 24px;
+          margin-left: 10px;
+          margin-top: 5px;
+        }
       }
       .search_clear_cion {
         -ms-flex-negative: 0;

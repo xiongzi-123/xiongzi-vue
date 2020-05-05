@@ -43,6 +43,19 @@ export const getterComic = () => {
   })
 }
 
+// 获取首页  更多  的数据
+// http://manhua.weibo.cn/wbcomic/home/recommend_list?location_en=h5_recommend_female_new_arrival&_type=h5
+export const getMoredata = (location_en = 'h5_recommend_female_fine_works') => {
+  return request({
+    url: '/api/wbcomic/home/recommend_list',
+    method: 'GET',
+    params: {
+      location_en,
+      _type: 'h5'
+    }
+  })
+}
+
 // http://manhua.weibo.cn/wbcomic/home/rank_read?_type=h5
 /**
  * 获取排行榜阅读榜
